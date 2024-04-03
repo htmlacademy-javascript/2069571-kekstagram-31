@@ -58,3 +58,6 @@ const createPhoto = () => ({
 });
 
 const photosArray = Array.from({ length: MAX_PHOTO_COUNT }, createPhoto);
+
+// eslint-disable-next-line no-console
+console.log(photosArray);
