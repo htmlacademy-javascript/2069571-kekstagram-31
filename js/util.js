@@ -24,4 +24,6 @@ const getId = (maxCount) => {
 
 const getRundomArrayElement = (array) => array[getRandomInteger(0, array.length - 1)];
 
-export { getRandomInteger, getId, getRundomArrayElement };
+const isEscDown = (e) => e.key === 'Escape';
+
+export { getRandomInteger, getId, getRundomArrayElement, isEscDown };
