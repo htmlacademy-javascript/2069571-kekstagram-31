@@ -1,10 +1,7 @@
-import { createPhotos } from './data';
 import { renderFullPicture } from './full-screen-picture';
-import { renderPicturesGallery } from './picture-template';
+import { picturesContainer } from './picture-template';
 import { isEscDown } from './util';
 
-const photos = createPhotos();
-const gallery = renderPicturesGallery(photos);
 const bigPictureModal = document.querySelector('.big-picture');
 
 const onDocumentKeydown = (evt) => {
@@ -29,15 +26,14 @@ function closeFullPictureModal() {
 }
 
 //обработчик для полноэкранного показа фото
-const picturesList = document.querySelectorAll('.picture');
+picturesContainer.addEventListener('click', (evt) => {
+  const currentPicture = evt.target.closest('.picture');
 
-for (let i = 0; i < picturesList.length; i++) {
-  picturesList[i].addEventListener('click', () => {
-    renderFullPicture(photos[i]);
+  if (currentPicture) {
+    evt.preventDefault();
     openFullPictureModal();
-  });
-}
+    renderFullPicture(currentPicture.dataset.photoID);
+  }
+});
 
 document.querySelector('.big-picture__cancel').addEventListener('click', closeFullPictureModal);
-
-export { gallery };
