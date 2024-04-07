@@ -1,20 +1,16 @@
-import { fillBigPictureCommentsTemplate } from './comments-template';
-
+import { renderComments } from './comments-render';
+import { photos } from './data';
 const bigPictureModal = document.querySelector('.big-picture');
 
-function renderFullPicture({ url, likes, comments, description }) {
-  bigPictureModal.querySelector('.big-picture__img > img').src = url;
-  bigPictureModal.querySelector('.likes-count').textContent = likes;
-  bigPictureModal.querySelector('.social__comment-total-count').textContent = comments.length;
-  bigPictureModal.querySelector('.social__caption').textContent = description;
+function renderFullPicture(photoID) {
+  const currentPhoto = photos.find((photo) => photo.id === +(photoID));
+  bigPictureModal.querySelector('.big-picture__img > img').src = currentPhoto.url;
+  bigPictureModal.querySelector('.likes-count').textContent = currentPhoto.likes;
+  bigPictureModal.querySelector('.social__comment-total-count').textContent = currentPhoto.comments.length;
+  bigPictureModal.querySelector('.social__caption').textContent = currentPhoto.description;
 
-  fillBigPictureCommentsTemplate(comments);
-
-  //временно скрытые блоки
-  document.querySelector('.social__comment-count').classList.add('hidden');
-  document.querySelector('.comments-loader').classList.add('hidden');
+  renderComments(currentPhoto.comments);
 }
-
 
 export { renderFullPicture };
 
