@@ -11,10 +11,6 @@ const SubmitButtonText = {
   SENDING: 'Сохраняю...'
 };
 
-const closeEditingForm = (formElement) => {
-  formElement.reset();
-};
-
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
@@ -34,7 +30,7 @@ const sendFormData = async (formElem) => {
     try {
       await sendData(new FormData(formElem));
       showSendingSuccess();
-      closeEditingForm(uploadForm);
+      closeEditorForm();
     } catch (error) {
       showSendingError();
     } finally {

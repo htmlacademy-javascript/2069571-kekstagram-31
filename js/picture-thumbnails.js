@@ -16,7 +16,6 @@ const onPhotoThumbnailsClick = (evt) => {
   if (currentPictureTag) {
     evt.preventDefault();
     openFullPictureModal();
-
     const currentPicture = searchPhoto(currentPictureTag.dataset.photoID);
     renderFullPicture(currentPicture);
   }

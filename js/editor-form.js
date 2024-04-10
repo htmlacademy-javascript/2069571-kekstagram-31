@@ -4,6 +4,7 @@ import './form-validation';
 import { resetFilter } from './effects';
 import './change-scale';
 import './send-data-form';
+import { resetScale } from './change-scale';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = form.querySelector('.img-upload__input');
@@ -39,9 +40,11 @@ function openEditorForm() {
 }
 
 function closeEditorForm() {
+  form.reset();
   photoEditorForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
   resetFilter();
+  resetScale();
   document.removeEventListener('keydown', onDocumentKeydown);
   document.removeEventListener('click', onCloseEditorFormBtnClick);
 
