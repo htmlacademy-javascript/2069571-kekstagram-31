@@ -96,6 +96,12 @@ const switchEffects = (value) => {
   });
 };
 
+const resetFilter = () => {
+  effectFieldset.classList.add('hidden');
+  effectLevelSlider.noUiSlider.reset();
+  editPicture.style.filter = '';
+};
+
 filters.forEach((filter) => {
   filter.addEventListener('change', () => {
     if (filter.checked) {
@@ -103,10 +109,10 @@ filters.forEach((filter) => {
         effectFieldset.classList.remove('hidden');
         switchEffects(filter.value);
       } else {
-        effectFieldset.classList.add('hidden');
-        effectLevelSlider.noUiSlider.reset();
-        editPicture.style.filter = '';
+        resetFilter();
       }
     }
   });
 });
+
+export { resetFilter };

@@ -1,9 +1,9 @@
-const form = document.querySelector('.img-upload__form');
-const hashtagField = form.querySelector('.text__hashtags');
-const commentField = form.querySelector('.text__description');
+const uploadForm = document.querySelector('.img-upload__form');
+const hashtagField = uploadForm.querySelector('.text__hashtags');
+const commentField = uploadForm.querySelector('.text__description');
 const MAX_HASHTAG_COUNT = 5;
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
@@ -19,6 +19,9 @@ const error = () => errorMessage;
 function validateHashtagField(value) {
   errorMessage = '';
   const hashtagsString = value.toLowerCase().trim();
+  if (!hashtagsString) {
+    return true;
+  }
   const hashtagsArr = hashtagsString.split(' ');
   const hashtagRegExp = /^#[a-zа-яё0-9]/i;
   const hashtagValueControl = [
@@ -58,14 +61,10 @@ function validateHashtagField(value) {
     });
   }
 }
-
 pristine.addValidator(hashtagField, validateHashtagField, error);
 pristine.addValidator(commentField, validateCommentField, 'Превышено количество символов, максимум 140 символов.');
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    hashtagField.value = hashtagField.value.trim().replaceAll(/\s+/g, ' ');
-    form.submit();
-  }
-});
+const validate = () => pristine.validate();
+
+export { validate };
+

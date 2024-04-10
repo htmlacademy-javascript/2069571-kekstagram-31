@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 import { isEscDown } from './util';
 import './form-validation';
-import './filtering';
+import { resetFilter } from './filtering';
+import './change-scale';
+import './send-data-form';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = form.querySelector('.img-upload__input');
@@ -34,39 +36,14 @@ function openEditorForm() {
 function closeEditorForm() {
   photoEditorForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resetFilter();
   document.removeEventListener('keydown', onDocumentKeydown);
   document.removeEventListener('click', onCloseEditorFormBtnClick);
 
   uploadInput.value = '';
 }
+
 uploadInput.addEventListener('change', openEditorForm);
 
-const smallerBtn = form.querySelector('.scale__control--smaller');
-const biggerBtn = form.querySelector('.scale__control--bigger');
-const controlRang = form.querySelector('.scale__control--value');
-const editPictureScale = form.querySelector('.img-upload__preview > img');
 
-const SCALE_STEP = 25;
-const MAX_SCALE = 100;
-const MIN_SCALE = 25;
-
-let current = parseInt(controlRang.value, 10);
-
-function makePictureSmaller() {
-  if (current > MIN_SCALE) {
-    current -= SCALE_STEP;
-    controlRang.setAttribute('value', `${current}%`);
-    editPictureScale.style.transform = `scale(${current / 100}`;
-  }
-}
-
-function makePictureBigger() {
-  if (current < MAX_SCALE) {
-    current += SCALE_STEP;
-    controlRang.setAttribute('value', `${current}%`);
-    editPictureScale.style.transform = `scale(${current / 100}`;
-  }
-}
-
-smallerBtn.addEventListener('click', makePictureSmaller);
-biggerBtn.addEventListener('click', makePictureBigger);
+export { closeEditorForm };
