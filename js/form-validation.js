@@ -5,8 +5,8 @@ const MAX_HASHTAG_COUNT = 5;
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error'
 });
 
 function validateCommentField(value) {
@@ -23,7 +23,7 @@ function validateHashtagField(value) {
     return true;
   }
   const hashtagsArr = hashtagsString.split(' ');
-  const hashtagRegExp = /^#[a-zа-яё0-9]/i;
+  const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
   const hashtagValueControl = [
     {
       check: hashtagsArr.some((item) => (item[0] !== '#')),
@@ -34,8 +34,8 @@ function validateHashtagField(value) {
       errorText: 'Минимум 2 символа.'
     },
     {
-      check: hashtagsArr.some((item) => !hashtagRegExp.test(item)),
-      errorText: 'Хэштег может состоять только из букв и чисел.'
+      check: hashtagsArr.some((item) => item.slice(1).includes('#')),
+      errorText: 'Хэштеги разделяются пробелами.'
     },
     {
       check: hashtagsArr.some((item, index, arr) => (arr.includes(item, index + 1))),
@@ -48,6 +48,10 @@ function validateHashtagField(value) {
     {
       check: hashtagsArr.some((item) => item.length > 20),
       errorText: 'Максимум 20 символов.'
+    },
+    {
+      check: hashtagsArr.some((item) => !hashtagRegExp.test(item)),
+      errorText: 'Хэштег может состоять только из букв и чисел.'
     },
   ];
 

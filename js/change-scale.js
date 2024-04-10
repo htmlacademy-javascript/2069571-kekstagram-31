@@ -26,5 +26,13 @@ function makePictureBigger() {
   }
 }
 
+function resetScale() {
+  controlRang.setAttribute('value', `${MAX_SCALE}%`);
+  editPictureScale.style.transform = `scale(${MAX_SCALE / 100}`;
+}
+
+
 smallerBtn.addEventListener('click', makePictureSmaller);
 biggerBtn.addEventListener('click', makePictureBigger);
+
+export { resetScale };

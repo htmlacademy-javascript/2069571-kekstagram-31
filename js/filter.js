@@ -2,7 +2,6 @@ import { debounce } from './util';
 import { renderThumbnails } from './picture-thumbnails';
 const filterList = document.querySelector('.img-filters');
 
-
 const debounceRender = debounce(renderThumbnails);
 
 const ACTIVE_CLASS = 'img-filters__button--active';
@@ -50,7 +49,6 @@ function applyFilter() {
   }
   debounceRender(filteredPhotos);
 }
-
 
 const setFilter = (data) => {
   filterList.classList.remove('.img-filters--inactive');
