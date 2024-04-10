@@ -1,9 +1,11 @@
 import { renderComments } from './comments-render';
-import { photos } from './data';
-const bigPictureModal = document.querySelector('.big-picture');
+import { isEscDown } from './util';
+import { searchPhoto } from './gallery';
 
-function renderFullPicture(photoID) {
-  const currentPhoto = photos.find((photo) => photo.id === +(photoID));
+const bigPictureModal = document.querySelector('.big-picture');
+const picturesContainer = document.querySelector('.pictures');
+
+function renderFullPicture(currentPhoto) {
   bigPictureModal.querySelector('.big-picture__img > img').src = currentPhoto.url;
   bigPictureModal.querySelector('.likes-count').textContent = currentPhoto.likes;
   bigPictureModal.querySelector('.social__comment-total-count').textContent = currentPhoto.comments.length;
@@ -11,6 +13,43 @@ function renderFullPicture(photoID) {
 
   renderComments(currentPhoto.comments);
 }
+
+const onDocumentKeydown = (evt) => {
+  if (isEscDown(evt)) {
+    evt.preventDefault();
+    closeFullPictureModal();
+  }
+};
+
+//открывает модальное окно
+function openFullPictureModal() {
+  bigPictureModal.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentKeydown);
+}
+
+//закрывает модальное окно
+function closeFullPictureModal() {
+  bigPictureModal.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
+
+//обработчик для полноэкранного показа фото
+picturesContainer.addEventListener('click', (evt) => {
+  const currentPictureTag = evt.target.closest('.picture');
+
+  if (currentPictureTag) {
+    evt.preventDefault();
+    openFullPictureModal();
+    const currentPicture = searchPhoto(currentPictureTag.dataset.photoID);
+
+    renderFullPicture(currentPicture);
+  }
+});
+
+document.querySelector('.big-picture__cancel').addEventListener('click', closeFullPictureModal);
+
 
 export { renderFullPicture };
 

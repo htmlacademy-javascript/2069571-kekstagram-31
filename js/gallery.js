@@ -1,39 +1,26 @@
-import { renderFullPicture } from './full-screen-picture';
-import { picturesContainer } from './picture-template';
-import { isEscDown } from './util';
+import './full-screen-picture';
+import { renderThumbnails } from './picture-template';
+import { getData } from './data-fetch';
+import { showGettingError } from './alerts';
 
-const bigPictureModal = document.querySelector('.big-picture');
+let photos = [];
+const savePhoto = (data) => {
+  photos = data;
+};
 
-const onDocumentKeydown = (evt) => {
-  if (isEscDown(evt)) {
-    evt.preventDefault();
-    closeFullPictureModal();
+const searchPhoto = (photoID) => photos.find((photo) => photo.id === +(photoID));
+
+const bootstrap = async () => {
+  try {
+    photos = await getData();
+    renderThumbnails(photos);
+    savePhoto(photos);
+  } catch (error) {
+    showGettingError();
   }
 };
 
-//открывает модальное окно
-function openFullPictureModal() {
-  bigPictureModal.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentKeydown);
-}
+bootstrap();
 
-//закрывает модальное окно
-function closeFullPictureModal() {
-  bigPictureModal.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
-}
 
-//обработчик для полноэкранного показа фото
-picturesContainer.addEventListener('click', (evt) => {
-  const currentPicture = evt.target.closest('.picture');
-
-  if (currentPicture) {
-    evt.preventDefault();
-    openFullPictureModal();
-    renderFullPicture(currentPicture.dataset.photoID);
-  }
-});
-
-document.querySelector('.big-picture__cancel').addEventListener('click', closeFullPictureModal);
+export { searchPhoto };

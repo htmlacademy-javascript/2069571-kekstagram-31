@@ -1,2 +1,3 @@
 import './gallery';
-import './edit-form';
+import './editor-form';
+
