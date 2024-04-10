@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { isEscDown } from './util';
 import './form-validation';
-import { resetFilter } from './filtering';
+import { resetFilter } from './effects';
 import './change-scale';
 import './send-data-form';
 
