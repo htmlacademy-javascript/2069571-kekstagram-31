@@ -1,9 +1,6 @@
 import { renderComments } from './comments-render';
 import { isEscDown } from './util';
-import { searchPhoto } from './gallery';
-
 const bigPictureModal = document.querySelector('.big-picture');
-const picturesContainer = document.querySelector('.pictures');
 
 function renderFullPicture(currentPhoto) {
   bigPictureModal.querySelector('.big-picture__img > img').src = currentPhoto.url;
@@ -35,21 +32,8 @@ function closeFullPictureModal() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-//обработчик для полноэкранного показа фото
-picturesContainer.addEventListener('click', (evt) => {
-  const currentPictureTag = evt.target.closest('.picture');
-
-  if (currentPictureTag) {
-    evt.preventDefault();
-    openFullPictureModal();
-    const currentPicture = searchPhoto(currentPictureTag.dataset.photoID);
-
-    renderFullPicture(currentPicture);
-  }
-});
-
 document.querySelector('.big-picture__cancel').addEventListener('click', closeFullPictureModal);
 
 
-export { renderFullPicture };
+export { renderFullPicture, openFullPictureModal };
 
