@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { isEscDown } from './util';
 import { resetFilter } from './effects';
-import './form-validation';
+import { unvalidate } from './form-validation';
 import { onMakePictureSmallerButtonClick, onMakePictureBiggerButtonClick, resetScale } from './change-scale';
 import './send-data-handler';
 import { onFileInputChange } from './loading-new-photo';
@@ -34,6 +34,7 @@ function closeEditorForm() {
   document.body.classList.remove('modal-open');
   resetFilter();
   resetScale();
+  unvalidate();
   document.removeEventListener('keydown', onDocumentKeydown);
   document.removeEventListener('click', onCloseEditorFormBtnClick);
 

@@ -23,7 +23,8 @@ function validateHashtagField(value) {
   if (!hashtagsString) {
     return true;
   }
-  const hashtagsArr = hashtagsString.split(' ');
+  const space = /\s+/g;
+  const hashtagsArr = hashtagsString.split(space);
   const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
   const hashtagsValueControl = [
     {
@@ -70,6 +71,7 @@ pristine.addValidator(hashtagField, validateHashtagField, error);
 pristine.addValidator(commentField, validateCommentField, 'Превышено количество символов, максимум 140 символов.');
 
 const validate = () => pristine.validate();
+const unvalidate = () => pristine.reset();
 
-export { validate };
+export { validate, unvalidate };
 
