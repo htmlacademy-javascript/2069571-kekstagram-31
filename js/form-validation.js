@@ -70,6 +70,7 @@ pristine.addValidator(hashtagField, validateHashtagField, error);
 pristine.addValidator(commentField, validateCommentField, 'Превышено количество символов, максимум 140 символов.');
 
 const validate = () => pristine.validate();
+const unvalidate = () => pristine.reset();
 
-export { validate };
+export { validate, unvalidate };
 
