@@ -13,14 +13,14 @@ const showGettingError = () => {
   }, ALERT_SHOW_TIME);
 };
 
-const closeAlert = (evt) => {
+const onCloseAlertEvent = (evt) => {
   evt.stopPropagation();
   const existElement = document.querySelector('.error') || document.querySelector('.success');
   const closeBtn = existElement.querySelector('button');
   if (evt.target === existElement || evt.target === closeBtn || isEscDown(evt)) {
     existElement.remove();
-    document.body.removeEventListener('click', closeAlert);
-    document.body.removeEventListener('keydown', closeAlert);
+    document.body.removeEventListener('click', onCloseAlertEvent);
+    document.body.removeEventListener('keydown', onCloseAlertEvent);
   }
 };
 
@@ -30,8 +30,8 @@ const showSendingError = () => {
   const errorContent = errorInner.querySelector('.error');
 
   document.body.append(errorContent);
-  document.body.addEventListener('click', closeAlert);
-  document.body.addEventListener('keydown', closeAlert);
+  document.body.addEventListener('click', onCloseAlertEvent);
+  document.body.addEventListener('keydown', onCloseAlertEvent);
 };
 
 const showSendingSuccess = () => {
@@ -41,10 +41,10 @@ const showSendingSuccess = () => {
 
   document.body.append(successContent);
 
-  document.body.addEventListener('click', closeAlert);
-  document.body.addEventListener('keydown', closeAlert);
+  document.body.addEventListener('click', onCloseAlertEvent);
+  document.body.addEventListener('keydown', onCloseAlertEvent);
 };
 
 
-export { showGettingError, showSendingError, showSendingSuccess, closeAlert };
+export { showGettingError, showSendingError, showSendingSuccess };
 

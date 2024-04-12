@@ -1,28 +1,22 @@
-import './full-screen-picture';
 import { renderThumbnails } from './picture-thumbnails';
+import { savePhoto } from './render-full-picture';
 import { getData } from './data-fetch';
 import { showGettingError } from './alerts';
 import { setFilter } from './filter';
+import './editor-form';
 
-let photos = [];
-const savePhoto = (data) => {
-  photos = data;
+const openBigPhoto = (dataPhotos) => {
+  savePhoto(dataPhotos);
 };
-
-const searchPhoto = (photoID) => photos.find((photo) => photo.id === +(photoID));
 
 const bootstrap = async () => {
   try {
-    photos = await getData();
+    const photos = await getData();
     setFilter(photos);
-    renderThumbnails(photos);
-    savePhoto(photos);
+    renderThumbnails(photos, openBigPhoto(photos));
   } catch (error) {
     showGettingError();
   }
 };
 
 bootstrap();
-
-
-export { searchPhoto };

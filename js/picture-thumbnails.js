@@ -1,6 +1,5 @@
-import { searchPhoto } from './gallery';
-import { openFullPictureModal } from './full-screen-picture';
-import { renderFullPicture } from './full-screen-picture';
+import { openFullPictureModal } from './full-picture-modal';
+import { renderFullPicture } from './render-full-picture';
 
 const pictureTemplate = document.querySelector('#picture').content;
 const newPictureTemplate = pictureTemplate.querySelector('.picture');
@@ -16,8 +15,8 @@ const onPhotoThumbnailsClick = (evt) => {
   if (currentPictureTag) {
     evt.preventDefault();
     openFullPictureModal();
-    const currentPicture = searchPhoto(currentPictureTag.dataset.photoID);
-    renderFullPicture(currentPicture);
+    const currentPictureID = currentPictureTag.dataset.photoID;
+    renderFullPicture(currentPictureID);
   }
 };
 
@@ -32,6 +31,7 @@ const renderThumbnails = (photos) => {
     element.querySelector('.picture__comments').textContent = comments.length;
     fragment.appendChild(element);
     picturesContainer.appendChild(fragment);
+
     picturesContainer.addEventListener('click', onPhotoThumbnailsClick);
   });
 };

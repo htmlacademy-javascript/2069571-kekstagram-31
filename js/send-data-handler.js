@@ -1,8 +1,8 @@
 import { validate } from './form-validation';
 import { sendData } from './data-fetch';
 import { showSendingError, showSendingSuccess } from './alerts';
-
 import { closeEditorForm } from './editor-form';
+
 const uploadForm = document.querySelector('.img-upload__form');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 
