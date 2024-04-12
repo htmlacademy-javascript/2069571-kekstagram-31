@@ -23,7 +23,8 @@ function validateHashtagField(value) {
   if (!hashtagsString) {
     return true;
   }
-  const hashtagsArr = hashtagsString.split(' ');
+  const space = /\s+/g;
+  const hashtagsArr = hashtagsString.split(space);
   const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
   const hashtagsValueControl = [
     {
