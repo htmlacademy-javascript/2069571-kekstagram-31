@@ -1,21 +1,19 @@
 /* eslint-disable no-console */
 import { isEscDown } from './util';
-import './form-validation';
 import { resetFilter } from './effects';
-import './change-scale';
-import './send-data-form';
-import { resetScale } from './change-scale';
+import './form-validation';
+import { onMakePictureSmallerButtonClick, onMakePictureBiggerButtonClick, resetScale } from './change-scale';
+import './send-data-handler';
+import { onFileInputChange } from './loading-new-photo';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = form.querySelector('.img-upload__input');
 const closeEditorFormBtn = form.querySelector('.img-upload__cancel');
 const photoEditorForm = form.querySelector('.img-upload__overlay');
-const preview = form.querySelector('.img-upload__preview > img');
 const hashtagField = form.querySelector('.text__hashtags');
 const commentField = form.querySelector('.text__description');
-const effectsForPreview = form.querySelectorAll('.effects__preview');
-
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const smallerBtn = form.querySelector('.scale__control--smaller');
+const biggerBtn = form.querySelector('.scale__control--bigger');
 
 const onCloseEditorFormBtnClick = () => closeEditorForm();
 
@@ -30,15 +28,6 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function openEditorForm() {
-  photoEditorForm.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  closeEditorFormBtn.addEventListener('click', onCloseEditorFormBtnClick);
-  document.addEventListener('keydown', onDocumentKeydown);
-
-  onFileInputChange();
-}
-
 function closeEditorForm() {
   form.reset();
   photoEditorForm.classList.add('hidden');
@@ -51,19 +40,17 @@ function closeEditorForm() {
   uploadInput.value = '';
 }
 
-uploadInput.addEventListener('change', openEditorForm);
+const onOpenEditorFormClick = () => {
+  photoEditorForm.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  closeEditorFormBtn.addEventListener('click', onCloseEditorFormBtnClick);
+  document.addEventListener('keydown', onDocumentKeydown);
 
-function onFileInputChange() {
-  const file = uploadInput.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if (matches) {
-    const url = URL.createObjectURL(file);
-    preview.src = url;
-    effectsForPreview.forEach((item) => {
-      item.style.backgroundImage = `url(${url})`;
-    });
-  }
-}
+  onFileInputChange();
+};
+
+uploadInput.addEventListener('change', onOpenEditorFormClick);
+smallerBtn.addEventListener('click', onMakePictureSmallerButtonClick);
+biggerBtn.addEventListener('click', onMakePictureBiggerButtonClick);
 
 export { closeEditorForm };

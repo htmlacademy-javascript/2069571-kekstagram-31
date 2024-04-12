@@ -7,15 +7,15 @@ const shownCommentsCountHode = document.querySelector('.social__comment-shown-co
 const loadCommentBtn = document.querySelector('.comments-loader');
 const commentsFragment = document.createDocumentFragment();
 
-function createCommentTemplate({ avatar, name, message }) {
+const createCommentTemplate = ({ avatar, name, message }) => {
   const commentTemplate = socialCommentTemplate.cloneNode(true);
   commentTemplate.querySelector('.social__picture').src = avatar;
   commentTemplate.querySelector('.social__picture').alt = name;
   commentTemplate.querySelector('.social__text').textContent = message;
   commentsFragment.appendChild(commentTemplate);
-}
+};
 
-function loadMoreComments() {
+const onLoadMoreCommentsButtonClick = () => {
   const shownComments = commentsData.slice(currentCount, currentCount + COUNT_STEP);
   const shownCommentsCount = shownComments.length + currentCount;
 
@@ -30,22 +30,21 @@ function loadMoreComments() {
     loadCommentBtn.classList.add('hidden');
   }
   currentCount += COUNT_STEP;
-}
+};
 
-function clearComments() {
+const clearComments = () => {
   currentCount = 0;
   loadCommentBtn.classList.remove('hidden');
   socialCommentsNode.innerHTML = '';
-  loadCommentBtn.removeEventListener('click', loadMoreComments);
-}
+  loadCommentBtn.removeEventListener('click', onLoadMoreCommentsButtonClick);
+};
 
-function renderComments(data) {
+const renderComments = (data) => {
   commentsData = data;
   clearComments();
-  loadMoreComments();
-
-  loadCommentBtn.addEventListener('click', loadMoreComments);
-}
+  onLoadMoreCommentsButtonClick();
+  loadCommentBtn.addEventListener('click', onLoadMoreCommentsButtonClick);
+};
 
 export { renderComments };
 

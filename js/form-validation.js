@@ -2,6 +2,10 @@ const uploadForm = document.querySelector('.img-upload__form');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const commentField = uploadForm.querySelector('.text__description');
 const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENTS_LENGTH = 140;
+
+let errorMessage = '';
+const error = () => errorMessage;
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -10,11 +14,8 @@ const pristine = new Pristine(uploadForm, {
 });
 
 function validateCommentField(value) {
-  return value.length <= 140;
+  return value.length <= MAX_COMMENTS_LENGTH;
 }
-
-let errorMessage = '';
-const error = () => errorMessage;
 
 function validateHashtagField(value) {
   errorMessage = '';
@@ -24,7 +25,7 @@ function validateHashtagField(value) {
   }
   const hashtagsArr = hashtagsString.split(' ');
   const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
-  const hashtagValueControl = [
+  const hashtagsValueControl = [
     {
       check: hashtagsArr.some((item) => (item[0] !== '#')),
       errorText: 'Хэштег должен начинаться с символа # (решетка).'
@@ -56,7 +57,7 @@ function validateHashtagField(value) {
   ];
 
   if (hashtagsString) {
-    return hashtagValueControl.every((item) => {
+    return hashtagsValueControl.every((item) => {
       const isInvalid = item.check;
       if (isInvalid) {
         errorMessage = item.errorText;
