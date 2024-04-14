@@ -3,8 +3,8 @@ import { isEscDown } from './util';
 import { resetFilter } from './effects';
 import { unvalidate } from './form-validation';
 import { onMakePictureSmallerButtonClick, onMakePictureBiggerButtonClick, resetScale } from './change-scale';
-import './send-data-handler';
 import { onFileInputChange } from './loading-new-photo';
+import './send-data-handler';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = form.querySelector('.img-upload__input');
@@ -28,6 +28,15 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const onOpenEditorFormClick = () => {
+  photoEditorForm.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  closeEditorFormBtn.addEventListener('click', onCloseEditorFormBtnClick);
+  document.addEventListener('keydown', onDocumentKeydown);
+
+  onFileInputChange();
+};
+
 function closeEditorForm() {
   form.reset();
   photoEditorForm.classList.add('hidden');
@@ -40,15 +49,6 @@ function closeEditorForm() {
 
   uploadInput.value = '';
 }
-
-const onOpenEditorFormClick = () => {
-  photoEditorForm.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  closeEditorFormBtn.addEventListener('click', onCloseEditorFormBtnClick);
-  document.addEventListener('keydown', onDocumentKeydown);
-
-  onFileInputChange();
-};
 
 uploadInput.addEventListener('change', onOpenEditorFormClick);
 smallerBtn.addEventListener('click', onMakePictureSmallerButtonClick);

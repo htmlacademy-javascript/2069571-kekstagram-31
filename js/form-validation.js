@@ -5,19 +5,16 @@ const MAX_HASHTAG_COUNT = 5;
 const MAX_COMMENTS_LENGTH = 140;
 
 let errorMessage = '';
-const error = () => errorMessage;
-
+const getError = () => errorMessage;
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
 });
 
-function validateCommentField(value) {
-  return value.length <= MAX_COMMENTS_LENGTH;
-}
+const validateCommentField = (value) => value.length <= MAX_COMMENTS_LENGTH;
 
-function validateHashtagField(value) {
+const validateHashtagField = (value) => {
   errorMessage = '';
   const hashtagsString = value.toLowerCase().trim();
   if (!hashtagsString) {
@@ -66,8 +63,9 @@ function validateHashtagField(value) {
       return !isInvalid;
     });
   }
-}
-pristine.addValidator(hashtagField, validateHashtagField, error);
+};
+
+pristine.addValidator(hashtagField, validateHashtagField, getError);
 pristine.addValidator(commentField, validateCommentField, 'Превышено количество символов, максимум 140 символов.');
 
 const validate = () => pristine.validate();

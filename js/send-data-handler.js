@@ -44,5 +44,5 @@ const formSubmitHandler = (evt) => {
   sendFormData(evt.target);
 };
 
-
 uploadForm.addEventListener('submit', formSubmitHandler);
+
